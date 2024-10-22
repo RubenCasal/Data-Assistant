@@ -1,0 +1,18 @@
+- Extraer columnas, columna target y descripción del negocio
+- (En un futuro hacer con varios csv, y que la propia aplicación los una)
+- Hacer gráficas de todo lo que se pueda
+- Análisis descriptivo (medias, mediana, moda, máximos, mínimos)
+- Gráficas de distribución
+- Clustering de clientes por comportamiento
+- Clustering de productos pro Top Performers, Low Performers
+- Correlación entre variables, gráficas o mapas de calor
+- (Posibilidad de hacer análisis de sentimientos)
+- Gráficas Tendencias y Estacionalidad
+- Rentabilidad de productos o servicios
+- Modelos de recomendación
+- (Análisis de la competencia)
+- (Calcular el CLV, entender cuanto valor aporta el cliente a lo largo del tiempo)
+- (Detección de outliers o anomalías)
+- (Análisis de Elasticidad del Precio-Demanda)
+- (Envió de alertas basados en unbrales, ventan caen mas del 10%, inventario cae por debajo cierto nivel)
+- (Optimización de Recursos humanos, desempeño empleados, retención de personal, áreas para mejorar la productividad)
