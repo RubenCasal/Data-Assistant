@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./Frontend/data-assistant-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+  
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./Backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ollama
+
+    networks:
+      - app-network
+
+  ollama:
+    build:
+      context: ./Ollama    # Specify the custom Dockerfile directory
+     
+    ports:
+      - "11434:11434"
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

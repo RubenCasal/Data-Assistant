@@ -1,5 +1,6 @@
-# Ignore .env files
-.env
+# Ignore Python cache files
+Backend/__pycache__/
 
-# Ignore all .csv files
-*.csv
+# Ignore Node modules
+Frontend/node_modules/
+Frontend/data-assistant-app/node_modules/
