@@ -63,6 +63,66 @@ A continuación se detalla el flujo de estados del agente, representado visualme
 
 Esta estructura garantiza que el agente mantenga un flujo lógico y eficiente en sus interacciones, permitiéndole responder a consultas complejas de manera precisa y ordenada.
 
----
+## Clase `DataExtractor`
 
-Este agente representa una solución avanzada para la manipulación y análisis de datos, utilizando una combinación de flujo de estados, múltiples modelos, y un sistema robusto de herramientas que le permiten adaptarse a una amplia variedad de necesidades del usuario.
+La clase `DataExtractor` es responsable de extraer información esencial del archivo de datos (`CSV`) cargado por el usuario. Esta información es utilizada por el agente para tomar decisiones informadas durante el procesamiento y análisis de datos. `DataExtractor` realiza una evaluación inicial de los datos para identificar características importantes, como los nombres de las columnas, los tipos de datos, y la cantidad de valores faltantes (`NA`). También organiza y provee una serie de herramientas para realizar modificaciones, análisis, y visualizaciones de los datos, y para manejar valores faltantes.
+
+### Funciones Principales de `DataExtractor`
+
+1. **Extracción de Información**: `DataExtractor` extrae y almacena los nombres de las columnas, tipos de datos, y la cantidad de valores faltantes para cada columna en un diccionario llamado `columns`. Esto ayuda al agente a seleccionar las herramientas adecuadas basadas en el tipo de dato o en si existen valores faltantes.
+
+2. **Procesamiento de Tipos de Datos**: La clase realiza conversiones automáticas de tipos de datos, como la identificación y conversión de fechas en formato de texto a tipos `datetime`.
+
+3. **Herramientas Disponibles**: `DataExtractor` organiza las herramientas en cuatro módulos: `data_modifications_tools`, `process_na_values_tools`, `data_analysis_tools`, y `data_graphics_tools`. Cada módulo contiene herramientas específicas que se pueden invocar para realizar tareas concretas en los datos.
+
+### Módulos y Herramientas de `DataExtractor`
+
+#### Herramientas de Modificación de Datos (`data_modifications_tools`)
+
+Estas herramientas permiten realizar transformaciones y filtrados en el conjunto de datos:
+
+- **tool_data_range**: Filtra los datos en un rango de fechas específico.
+- **tool_get_current_date**: Devuelve la fecha actual en formato `dd-mm-yyyy`.
+- **tool_operation_date**: Suma o resta años a una fecha dada.
+- **tool_filter_string**: Filtra filas en una columna en base a coincidencias de texto.
+- **tool_filter_numeric**: Filtra filas en una columna numérica según un operador de comparación (`>`, `<`, `=`, `>=`, `<=`).
+- **tool_filter_date**: Filtra filas en una columna de fecha en base al año, mes, o día.
+- **tool_drop_column**: Elimina una columna específica del conjunto de datos.
+
+#### Herramientas para Procesar Valores Faltantes (`process_na_values_tools`)
+
+Estas herramientas permiten gestionar valores faltantes (`NA`) en el conjunto de datos:
+
+- **tool_missing_values**: Muestra el porcentaje de valores faltantes en cada columna.
+- **tool_impute_mean_median**: Imputa valores faltantes en una columna numérica utilizando la media o la mediana.
+- **tool_knn_imputation**: Realiza imputación de valores faltantes mediante el método de K-Nearest Neighbors.
+- **tool_interpolation**: Realiza interpolación lineal o polinómica en una columna de series temporales.
+- **tool_impute_mode**: Imputa valores faltantes en una columna categórica utilizando el valor más frecuente.
+- **tool_impute_placeholder**: Rellena valores faltantes en una columna categórica con un marcador de posición (por defecto, `"Unknown"`).
+- **tool_forward_backward_fill**: Realiza una imputación hacia adelante o hacia atrás en una columna de fecha.
+
+#### Herramientas de Análisis de Datos (`data_analysis_tools`)
+
+Estas herramientas realizan análisis estadísticos y exploratorios en los datos:
+
+- **tool_descriptive_statistics**: Proporciona estadísticas descriptivas básicas para una columna numérica.
+- **tool_correlation_matrix**: Calcula y muestra la matriz de correlación para columnas numéricas, y destaca las 5 columnas más correlacionadas con la columna de interés.
+- **tool_value_counts**: Proporciona la distribución de frecuencias de una columna.
+- **tool_outlier_detection**: Detecta valores atípicos en una columna numérica usando el método IQR.
+- **tool_trend_analysis**: Realiza un análisis de tendencia en una columna de series temporales mediante un promedio móvil.
+
+#### Herramientas de Visualización de Datos (`data_graphics_tools`)
+
+Estas herramientas generan gráficos basados en los datos para proporcionar representaciones visuales:
+
+- **tool_bar_chart**: Crea un gráfico de barras para una columna categórica.
+- **tool_histogram**: Crea un histograma para una columna numérica o un gráfico de barras para una columna categórica.
+- **tool_line_chart**: Crea un gráfico de líneas con el índice en el eje X y los valores de una columna numérica en el eje Y.
+- **tool_scatter_plot**: Crea un gráfico de dispersión con el índice en el eje X y los valores de una columna numérica en el eje Y.
+
+### Integración de Herramientas y Utilización
+
+La clase `DataExtractor` almacena todas las herramientas en un diccionario llamado `tools`, donde cada herramienta está identificada por su nombre. Esto permite que el agente acceda a ellas de forma dinámica durante su funcionamiento, invocando la herramienta adecuada en función del prompt del usuario y la naturaleza de los datos en análisis.
+
+Este diseño modular facilita la extensibilidad y la reutilización de herramientas, haciendo que el agente sea altamente adaptable a una variedad de tareas de manipulación y análisis de datos.
+
