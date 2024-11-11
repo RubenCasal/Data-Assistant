@@ -124,5 +124,23 @@ Estas herramientas generan gráficos basados en los datos para proporcionar repr
 
 La clase `DataExtractor` almacena todas las herramientas en un diccionario llamado `tools`, donde cada herramienta está identificada por su nombre. Esto permite que el agente acceda a ellas de forma dinámica durante su funcionamiento, invocando la herramienta adecuada en función del prompt del usuario y la naturaleza de los datos en análisis.
 
-Este diseño modular facilita la extensibilidad y la reutilización de herramientas, haciendo que el agente sea altamente adaptable a una variedad de tareas de manipulación y análisis de datos.
+# API de Manipulación y Análisis de Datos
+
+Esta API permite a los usuarios cargar un archivo CSV, interactuar con un modelo de lenguaje para realizar modificaciones, análisis y visualizaciones en los datos. Además, proporciona endpoints para descargar gráficos y los datos modificados.
+
+## Endpoints
+
+### 1. Cargar CSV y Inicializar el Bot
+
+- **URL**: `/upload-csv/{user_id}`
+- **Método**: `POST`
+- **Descripción**: Permite al usuario cargar un archivo CSV y inicializar el bot con los datos del CSV.
+- **Parámetros**:
+  - `user_id` (path): ID único del usuario para mantener la sesión.
+  - `file` (form-data): El archivo CSV que se cargará.
+- **Ejemplo de Respuesta**:
+  ```json
+  {
+    "message": "CSV uploaded and bot initialized successfully."
+  }
 
