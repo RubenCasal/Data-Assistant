@@ -126,21 +126,48 @@ La clase `DataExtractor` almacena todas las herramientas en un diccionario llama
 
 # API de Manipulación y Análisis de Datos
 
-Esta API permite a los usuarios cargar un archivo CSV, interactuar con un modelo de lenguaje para realizar modificaciones, análisis y visualizaciones en los datos. Además, proporciona endpoints para descargar gráficos y los datos modificados.
+Esta API permite a los usuarios cargar un archivo CSV, interactuar con un modelo de lenguaje para modificar y analizar los datos, y descargar gráficos y el archivo CSV modificado. 
 
-## Endpoints
+## Endpoints y Funcionalidad
 
-### 1. Cargar CSV y Inicializar el Bot
-
-- **URL**: `/upload-csv/{user_id}`
+### 1. `/upload-csv/{user_id}` - Cargar CSV e Inicializar el Bot
 - **Método**: `POST`
-- **Descripción**: Permite al usuario cargar un archivo CSV y inicializar el bot con los datos del CSV.
+- **Funcionalidad**: Permite cargar un archivo CSV y configurar el bot con los datos del archivo para una sesión de usuario específica.
+- **Parámetros**: 
+  - `user_id` (path): Identificador único del usuario.
+  - `file` (form-data): El archivo CSV a cargar.
+- **Respuesta**: Confirma la carga del archivo y la inicialización del bot.
+
+### 2. `/chat/{user_id}` - Interactuar con el Bot
+- **Método**: `POST`
+- **Funcionalidad**: Envía un mensaje al bot en lenguaje natural y recibe una respuesta, que puede ser texto o un gráfico.
 - **Parámetros**:
-  - `user_id` (path): ID único del usuario para mantener la sesión.
-  - `file` (form-data): El archivo CSV que se cargará.
-- **Ejemplo de Respuesta**:
-  ```json
-  {
-    "message": "CSV uploaded and bot initialized successfully."
-  }
+  - `user_id` (path): Identificador único del usuario.
+  - `prompt` (json): Mensaje o pregunta para el bot.
+- **Respuesta**: Mensaje de texto o imagen generada según la solicitud.
+
+### 3. `/download-charts/{user_id}` - Descargar Todos los Gráficos
+- **Método**: `GET`
+- **Funcionalidad**: Permite descargar un archivo ZIP con todos los gráficos generados durante la sesión de usuario.
+- **Parámetros**:
+  - `user_id` (path): Identificador único del usuario.
+- **Respuesta**: Archivo ZIP con los gráficos generados.
+
+### 4. `/data-head-image/{user_id}` - Ver Cabecera del DataFrame
+- **Método**: `GET`
+- **Funcionalidad**: Devuelve una imagen con las primeras filas del archivo CSV cargado, útil para previsualizar los datos.
+- **Parámetros**:
+  - `user_id` (path): Identificador único del usuario.
+- **Respuesta**: Imagen en formato PNG con las primeras filas del DataFrame.
+
+### 5. `/download-csv/{user_id}` - Descargar CSV Modificado
+- **Método**: `GET`
+- **Funcionalidad**: Permite descargar el archivo CSV con los datos modificados durante la sesión.
+- **Parámetros**:
+  - `user_id` (path): Identificador único del usuario.
+- **Respuesta**: Archivo CSV con los datos actualizados y modificados.
+
+---
+
+Cada endpoint está diseñado para facilitar la manipulación y análisis de datos mediante el bot, permitiendo además una visualización gráfica de los resultados y la descarga del archivo procesado.
 
