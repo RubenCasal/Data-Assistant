@@ -19,27 +19,29 @@ Este proyecto es un chatbot de análisis de datos que permite a los usuarios int
 Este proyecto busca simplificar el análisis de datos para usuarios que necesitan realizar consultas y transformaciones de archivos `.csv` de manera eficiente y sin conocimientos técnicos de programación o manipulación de datos.
 # Agente de Análisis de Datos Basado en Llama 3.1
 
-Este proyecto es un agente de análisis de datos diseñado para interactuar con el usuario a través de lenguaje natural y realizar modificaciones, análisis, y visualizaciones en archivos de datos. Basado en el modelo Llama 3.1 y en una arquitectura de flujo de estados, este agente permite que los usuarios consulten y manipulen sus datos sin requerir conocimientos técnicos avanzados.
+Este proyecto es un agente de análisis de datos diseñado para interactuar con el usuario mediante lenguaje natural y realizar modificaciones, análisis, y visualizaciones en archivos de datos. Basado en el modelo Llama 3.1 y en una arquitectura de flujo de estados, este agente permite que los usuarios consulten y manipulen sus datos sin requerir conocimientos técnicos avanzados.
+
+El agente es capaz de ejecutar múltiples herramientas en una sola consulta si la operación lo requiere, lo que le permite resolver operaciones complejas a partir de un único prompt del usuario. Cada modelo recibe una instrucción específica para guiar su comportamiento y garantizar que interprete el prompt correctamente, optimizando así la precisión de las respuestas y la experiencia del usuario.
 
 ![Diagrama del grafo de estados del agente](graph.png)
 
 ## Arquitectura del Agente
 
-El agente utiliza una arquitectura basada en un grafo de estados (`StateGraph`) para dirigir el flujo de la conversación según las intenciones y necesidades del usuario. Este grafo permite que el agente siga un flujo lógico en cada interacción, ayudándole a identificar la intención principal y guiar las respuestas de manera precisa.
+El agente utiliza una arquitectura basada en un grafo de estados (`StateGraph`) que dirige el flujo de la conversación según las intenciones y necesidades del usuario. Este grafo asegura que el agente siga un flujo lógico en cada interacción, ayudándole a identificar la intención principal y a guiar sus respuestas de manera precisa.
 
 ### Proceso de un Prompt a Través del Grafo
 
 1. **Inicio del Grafo**: Todo comienza en el nodo `start_node`, donde el agente evalúa la intención general del prompt del usuario.
-2. **Evaluación de Intención**: En el nodo `start_node`, el agente evalúa si la intención del usuario es:
-   - Relacionada con datos (`data_related`): Inicia la navegación hacia operaciones sobre los datos.
-   - Ayuda al usuario (`help_user`): Si el usuario necesita una guía sobre el agente.
-   - No relacionada (`prompt_unrelated`): Si la solicitud no está relacionada con el análisis de datos.
+2. **Evaluación de Intención**: En el nodo `start_node`, el agente determina si la intención del usuario es:
+   - Relacionada con datos (`data_related`): Lo cual inicia la navegación hacia operaciones sobre los datos.
+   - Ayuda al usuario (`help_user`): Cuando el usuario necesita una guía sobre el agente.
+   - No relacionada (`prompt_unrelated`): Cuando la solicitud no está relacionada con el análisis de datos.
 3. **Selección de Operación**: Si la intención es `data_related`, el flujo se divide en diferentes nodos según el tipo de operación solicitada, como `data_modification`, `process_na_values`, `create_analysis`, o `create_graphics`.
 4. **Ejecutar la Operación**: Cada nodo correspondiente a una operación dirige el flujo hacia herramientas específicas y genera los resultados en función de los datos y la solicitud del usuario.
 
 ## Modelos y Herramientas Especializadas
 
-Debido a la gran variedad de herramientas disponibles, el agente utiliza cinco modelos distintos. Esto permite una mejor gestión y selección de las herramientas para cada tarea específica. Los modelos son los siguientes:
+Para gestionar la variedad de herramientas disponibles, el agente utiliza cinco modelos distintos. Esto facilita la selección de la herramienta adecuada para cada tarea específica. Los modelos son los siguientes:
 
 - **Modelo de Modificación de Datos** (`data_modification`): Se utiliza para operaciones de modificación de datos, como filtrar, eliminar columnas, o modificar valores.
 - **Modelo para Procesar Valores Faltantes** (`process_na_values`): Este modelo es responsable de manejar valores faltantes mediante imputación o técnicas de reemplazo.
@@ -47,15 +49,7 @@ Debido a la gran variedad de herramientas disponibles, el agente utiliza cinco m
 - **Modelo para Visualización de Datos** (`create_graphics`): Encargado de generar gráficos y representaciones visuales basadas en los datos.
 - **Modelo sin Herramientas** (`help_user`): Este modelo es especial porque no incluye herramientas, y se utiliza únicamente para ayudar al usuario. Debido a que Llama 3.1 tiende a forzar el uso de herramientas cuando están disponibles, este modelo se crea específicamente para responder preguntas sobre el agente sin intentar invocar herramientas.
 
-## Ejecución de Herramientas Múltiples en un Solo Prompt
-
-El agente tiene la capacidad de llamar a múltiples herramientas en una sola interacción si es necesario. Esto significa que, a partir de un único prompt del usuario, el modelo puede secuenciar varias herramientas y combinarlas para alcanzar la solución deseada. Esta funcionalidad es particularmente útil en operaciones complejas que requieren varios pasos.
-
-## Instrucciones para Guiar el Comportamiento del Modelo
-
-Cada modelo recibe una instrucción específica que le ayuda a determinar el contexto y seleccionar la herramienta adecuada. Estas instrucciones están diseñadas para guiar al modelo y asegurar que interprete el prompt del usuario de manera precisa, optimizando la experiencia del usuario y la precisión de los resultados.
-
-## Funcionamiento del Grafo de Estados
+### Funcionamiento del Grafo de Estados
 
 A continuación se detalla el flujo de estados del agente, representado visualmente en la imagen `graph.png`:
 1. El prompt del usuario es evaluado y clasificado en `start_node`.
