@@ -167,6 +167,36 @@ Esta API permite a los usuarios cargar un archivo CSV, interactuar con un modelo
   - `user_id` (path): Identificador único del usuario.
 - **Respuesta**: Archivo CSV con los datos actualizados y modificados.
 
----
+## Docker
+
+La aplicación está compuesta por tres contenedores Docker, definidos en el archivo `docker-compose.yaml`. Cada uno tiene un rol específico y se comunican entre ellos a través de una red de Docker llamada `app-network`.
+
+### Contenedores
+
+1. **frontend**:
+   - Ejecuta la interfaz de usuario desarrollada en React.
+   - Expone el puerto `3000` para que el usuario pueda acceder a la aplicación web.
+   - Depende del servicio `backend`, por lo que no se inicia hasta que el backend esté disponible.
+   - Se comunica con el backend a través de la red `app-network`.
+
+2. **backend**:
+   - Contiene la API de FastAPI que maneja la lógica del agente y las operaciones con el CSV.
+   - Expone el puerto `8000` para aceptar solicitudes desde el `frontend`.
+   - Depende del contenedor `ollama`, que se utiliza para la inferencia del modelo.
+   - Se conecta a `ollama` y al `frontend` mediante `app-network`.
+
+3. **ollama**:
+   - Este contenedor es responsable de ejecutar el modelo Llama3.1 para responder a los prompts.
+   - Requiere una GPU, por lo que utiliza `runtime: nvidia` y define `NVIDIA_VISIBLE_DEVICES=all`.
+   - Expone el puerto `11434`, permitiendo que el `backend` envíe solicitudes para obtener respuestas del modelo.
+   - Incluye un script `wait_for_ollama.sh` que espera a que el modelo esté disponible antes de aceptar conexiones.
+
+### Ejecución
+
+Para iniciar la aplicación, simplemente ejecuta el siguiente comando:
+
+```bash
+docker-compose up
+
 
 
