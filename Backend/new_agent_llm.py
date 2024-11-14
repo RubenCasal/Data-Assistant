@@ -3,7 +3,8 @@ from langgraph.graph import StateGraph, END
 import operator
 from langchain_core.messages import AnyMessage, SystemMessage, HumanMessage, ToolMessage
 from typing import TypedDict, Annotated
-
+from IPython.display import Image, display
+from langchain_core.runnables.graph import CurveStyle, MermaidDrawMethod, NodeStyles
 
 class AgentState(TypedDict):
     messages: Annotated[list[AnyMessage], operator.add]
@@ -50,7 +51,15 @@ class Agent:
 
 
         graph.set_entry_point("start_node")
+        
         self.graph = graph.compile(checkpointer=checkpointer )
+        graph_png = self.graph.get_graph().draw_mermaid_png(draw_method=MermaidDrawMethod.API)
+
+        with open("graph.png", "wb") as f:
+            f.write(graph_png)
+
+        print("El grafo se ha guardado como 'graph.png'")
+
 
         self.tools = self.data_extractor.tools
        
@@ -63,8 +72,7 @@ class Agent:
         # Model without tools
         self.model_no_tools =  model
 
-    
-
+        
     def execute_tools(self,model_response):
       
         tool_calls = model_response.tool_calls

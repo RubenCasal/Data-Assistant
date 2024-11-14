@@ -158,7 +158,7 @@ const Chatbot: React.FC = () => {
         </Typography>
 
         {dataImageUrl && (
-          <Box component="img" src={dataImageUrl} alt="Data Head" sx={{ width: '100%', maxWidth: 300, height: 'auto', borderRadius: 2, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', marginBottom: 4 }} />
+          <Box component="img" src={dataImageUrl} alt="Data Head" sx={{ width: '100%', maxWidth: 500, height: 'auto', borderRadius: 2, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', marginBottom: 4 }} />
         )}
 
         <Box sx={{ textAlign: 'center', marginBottom: 4 }}>
