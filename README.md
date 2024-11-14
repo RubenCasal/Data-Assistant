@@ -130,7 +130,7 @@ Esta API permite a los usuarios cargar un archivo CSV, interactuar con un modelo
 
 ## Endpoints y Funcionalidad
 
-### 1. `/upload-csv/{user_id}` - Cargar CSV e Inicializar el Bot
+### 1. `http://backend/upload-csv/{user_id}` - Cargar CSV e Inicializar el Bot
 - **Método**: `POST`
 - **Funcionalidad**: Permite cargar un archivo CSV y configurar el bot con los datos del archivo para una sesión de usuario específica.
 - **Parámetros**: 
@@ -138,7 +138,7 @@ Esta API permite a los usuarios cargar un archivo CSV, interactuar con un modelo
   - `file` (form-data): El archivo CSV a cargar.
 - **Respuesta**: Confirma la carga del archivo y la inicialización del bot.
 
-### 2. `/chat/{user_id}` - Interactuar con el Bot
+### 2. `http://backend/chat/{user_id}` - Interactuar con el Bot
 - **Método**: `POST`
 - **Funcionalidad**: Envía un mensaje al bot en lenguaje natural y recibe una respuesta, que puede ser texto o un gráfico.
 - **Parámetros**:
@@ -146,21 +146,21 @@ Esta API permite a los usuarios cargar un archivo CSV, interactuar con un modelo
   - `prompt` (json): Mensaje o pregunta para el bot.
 - **Respuesta**: Mensaje de texto o imagen generada según la solicitud.
 
-### 3. `/download-charts/{user_id}` - Descargar Todos los Gráficos
+### 3. `http://backend/download-charts/{user_id}` - Descargar Todos los Gráficos
 - **Método**: `GET`
 - **Funcionalidad**: Permite descargar un archivo ZIP con todos los gráficos generados durante la sesión de usuario.
 - **Parámetros**:
   - `user_id` (path): Identificador único del usuario.
 - **Respuesta**: Archivo ZIP con los gráficos generados.
 
-### 4. `/data-head-image/{user_id}` - Ver Cabecera del DataFrame
+### 4. `http://backend/data-head-image/{user_id}` - Ver Cabecera del DataFrame
 - **Método**: `GET`
 - **Funcionalidad**: Devuelve una imagen con las primeras filas del archivo CSV cargado, útil para previsualizar los datos.
 - **Parámetros**:
   - `user_id` (path): Identificador único del usuario.
 - **Respuesta**: Imagen en formato PNG con las primeras filas del DataFrame.
 
-### 5. `/download-csv/{user_id}` - Descargar CSV Modificado
+### 5. `http://backend/download-csv/{user_id}` - Descargar CSV Modificado
 - **Método**: `GET`
 - **Funcionalidad**: Permite descargar el archivo CSV con los datos modificados durante la sesión.
 - **Parámetros**:
@@ -169,5 +169,4 @@ Esta API permite a los usuarios cargar un archivo CSV, interactuar con un modelo
 
 ---
 
-Cada endpoint está diseñado para facilitar la manipulación y análisis de datos mediante el bot, permitiendo además una visualización gráfica de los resultados y la descarga del archivo procesado.
 
