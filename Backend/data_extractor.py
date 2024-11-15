@@ -665,33 +665,38 @@ class DataExtractor:
     
     def get_tool_scatter_plot(self):
         @tool
-        def tool_scatter_plot(column_name: str, color: str = 'red') -> str:
+        def tool_scatter_plot(x_column: str, y_column: str, color: str = 'red') -> str:
             """
-            Create a scatter plot with the index on the x-axis and the values of `column_name` on the y-axis.
+            Create a scatter plot with `x_column` on the x-axis and `y_column` on the y-axis.
             """
-            # Check if the column is numeric
-            if not pd.api.types.is_numeric_dtype(self.data[column_name]):
-                return f"Error: Column '{column_name}' must be numeric for a scatter plot."
+            # Check if both columns are numeric
+            if x_column not in self.data.columns or y_column not in self.data.columns:
+                return f"Error: Columns '{x_column}' and/or '{y_column}' not found in the dataset."
+            if not pd.api.types.is_numeric_dtype(self.data[x_column]) or not pd.api.types.is_numeric_dtype(self.data[y_column]):
+                return f"Error: Both columns must be numeric for a scatter plot."
 
+            print(f"Creating scatter plot: {x_column} vs {y_column}")
+            # Create the scatter plot
             fig, ax = plt.subplots()
-            ax.scatter(self.data.index, self.data[column_name], color=color)
-            ax.set_title(f"Scatter Plot: {column_name}")
-            ax.set_xlabel("Index")
-            ax.set_ylabel(column_name)
+            ax.scatter(self.data[x_column], self.data[y_column], color=color)
+            ax.set_title(f"Scatter Plot: {x_column} vs {y_column}")
+            ax.set_xlabel(x_column)
+            ax.set_ylabel(y_column)
 
             # Save the figure
             charts_folder = f'./users_data/{self.user_id}/charts'
             if not os.path.exists(charts_folder):
                 os.makedirs(charts_folder)
             
-            chart_name = f"scatter_plot_{column_name}.png"
+            chart_name = f"scatter_plot_{x_column}_vs_{y_column}.png"
             fig_path = os.path.join(charts_folder, chart_name)
             fig.savefig(fig_path)
-            
+
             plt.close(fig)  # Close the figure after saving to free memory
             return f"Figure: {chart_name}"
 
         return tool_scatter_plot
+
 
 
 
