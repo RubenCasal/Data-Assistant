@@ -25,7 +25,7 @@ Este proyecto es un chatbot de análisis de datos que permite a los usuarios int
 - **Despliegue en Docker**: Cada componente del proyecto está configurado en un contenedor Docker independiente con su respectivo `Dockerfile`, permitiendo un despliegue ágil y reproducible.
 
 Este proyecto busca simplificar el análisis de datos para usuarios que necesitan realizar consultas y transformaciones de archivos `.csv` de manera eficiente y sin conocimientos técnicos de programación o manipulación de datos.
-# Agente de Análisis de Datos Basado en Llama 3.1
+# Agente de Análisis de Datos
 
 Este proyecto es un agente de análisis de datos diseñado para interactuar con el usuario mediante lenguaje natural y realizar modificaciones, análisis, y visualizaciones en archivos de datos. Basado en el modelo Llama 3.1 y en una arquitectura de flujo de estados, este agente permite que los usuarios consulten y manipulen sus datos sin requerir conocimientos técnicos avanzados.
 
@@ -71,34 +71,34 @@ El prompt del usuario es evaluado y clasificado en `start_node`.
 Dependiendo de la intención identificada, el flujo se dirige a uno de los siguientes estados:
 
 #### **2.1. Data Modification**
-Para operaciones de modificación de datos.  
+Para operaciones de modificación de datos, como filtrar, eliminar columnas, o modificar valores. 
 <p align="center">
   <img src="readme_images/filter_data.png" alt="Data Modification" width="600"/>
 </p>
 
 #### **2.2. Process NA Values**
-Para gestionar valores faltantes.  
+Para gestionar valores faltantes con distintas técnicas, eligiendo la que mejor se ajuste a los datos dados.  
 <p align="center">
   <img src="readme_images/process_na_values.png" alt="Process NA Values" width="600"/>
 </p>
 
 
 #### **2.3. Create Analysis**
-Para ejecutar análisis de datos.  
+Para hacer análisis estadísticos, cálculos de correlación, y detección de valores atípicos. 
 <p align="center">
   <img src="readme_images/statistical_analysis.png" alt="Create Analysis" width="600"/>
 </p>
 
 
 #### **2.4. Create Graphics**
-Para crear visualizaciones.  
+Para generar gráficos y representaciones visuales basadas en los datos.  
 <p align="center">
   <img src="readme_images/data_charts.png" alt="Create Graphics" width="600"/>
 </p>
 
 
 #### **2.5. Help User**
-Para guiar al usuario.  
+Para guiar al usuario y responder dudas de las funcionalidades de la aplicacion.  
 <p align="center">
   <img src="readme_images/help_user.png" alt="Help User" width="600"/>
 </p>
@@ -247,6 +247,6 @@ Para iniciar la aplicación, simplemente ejecuta el siguiente comando:
 
 ```bash
 docker-compose up
-
+```
 
 
