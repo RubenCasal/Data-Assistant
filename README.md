@@ -30,8 +30,9 @@ Este proyecto busca simplificar el análisis de datos para usuarios que necesita
 Este proyecto es un agente de análisis de datos diseñado para interactuar con el usuario mediante lenguaje natural y realizar modificaciones, análisis, y visualizaciones en archivos de datos. Basado en el modelo Llama 3.1 y en una arquitectura de flujo de estados, este agente permite que los usuarios consulten y manipulen sus datos sin requerir conocimientos técnicos avanzados.
 
 El agente es capaz de ejecutar múltiples herramientas en una sola consulta si la operación lo requiere, lo que le permite resolver operaciones complejas a partir de un único prompt del usuario. Cada modelo recibe una instrucción específica para guiar su comportamiento y garantizar que interprete el prompt correctamente, optimizando así la precisión de las respuestas y la experiencia del usuario.
-
-![Diagrama del grafo de estados del agente](graph.png)
+<p align="center">
+  <img src="readme_images/graph.png" alt="Data Modification" width="700"/>
+</p>
 
 ## Arquitectura del Agente
 
@@ -57,25 +58,66 @@ Para gestionar la variedad de herramientas disponibles, el agente utiliza cinco 
 - **Modelo para Visualización de Datos** (`create_graphics`): Encargado de generar gráficos y representaciones visuales basadas en los datos.
 - **Modelo sin Herramientas** (`help_user`): Este modelo es especial porque no incluye herramientas, y se utiliza únicamente para ayudar al usuario. Debido a que Llama 3.1 tiende a forzar el uso de herramientas cuando están disponibles, este modelo se crea específicamente para responder preguntas sobre el agente sin intentar invocar herramientas.
 
-### Funcionamiento del Grafo de Estados
+## Funcionamiento del Grafo de Estados
 
-A continuación se detalla el flujo de estados del agente, representado visualmente en la imagen `graph.png`:
-1. El prompt del usuario es evaluado y clasificado en `start_node`.
-2. Dependiendo de la intención, el flujo se dirige a:
-   - `data_modification`: Para operaciones de modificación de datos.
-   - `process_na_values`: Para gestionar valores faltantes.
-   - `create_analysis`: Para ejecutar análisis de datos.
-   - `create_graphics`: Para crear visualizaciones.
-   - `help_user`: Para guiar al usuario.
-   - `prompt_unrelated`: Cuando la solicitud no está relacionada con los datos.
+A continuación, se detalla el flujo de estados del agente, representado visualmente en la imagen `graph.png`.
 
-Esta estructura garantiza que el agente mantenga un flujo lógico y eficiente en sus interacciones, permitiéndole responder a consultas complejas de manera precisa y ordenada.
+### 1. Evaluación Inicial
+
+El prompt del usuario es evaluado y clasificado en `start_node`.
+
+### 2. Flujos según la Intención del Usuario
+
+Dependiendo de la intención identificada, el flujo se dirige a uno de los siguientes estados:
+
+#### **2.1. Data Modification**
+Para operaciones de modificación de datos.  
+<p align="center">
+  <img src="readme_images/filter_data.png" alt="Data Modification" width="600"/>
+</p>
+
+#### **2.2. Process NA Values**
+Para gestionar valores faltantes.  
+<p align="center">
+  <img src="readme_images/process_na_values.png" alt="Process NA Values" width="600"/>
+</p>
+
+
+#### **2.3. Create Analysis**
+Para ejecutar análisis de datos.  
+<p align="center">
+  <img src="readme_images/statistical_analysis.png" alt="Create Analysis" width="600"/>
+</p>
+
+
+#### **2.4. Create Graphics**
+Para crear visualizaciones.  
+<p align="center">
+  <img src="readme_images/data_charts.png" alt="Create Graphics" width="600"/>
+</p>
+
+
+#### **2.5. Help User**
+Para guiar al usuario.  
+<p align="center">
+  <img src="readme_images/help_user.png" alt="Help User" width="600"/>
+</p>
+
+
+#### **2.6. Prompt Unrelated**
+Cuando la solicitud no está relacionada con los datos.  
+<p align="center">
+  <img src="readme_images/pointless_prompts.png" alt="Prompt Unrelated" width="600"/>
+</p>
+
+
+
 
 ## Clase `DataExtractor`
 
 La clase `DataExtractor` es responsable de extraer información esencial del archivo de datos (`CSV`) cargado por el usuario. Esta información es utilizada por el agente para tomar decisiones informadas durante el procesamiento y análisis de datos. `DataExtractor` realiza una evaluación inicial de los datos para identificar características importantes, como los nombres de las columnas, los tipos de datos, y la cantidad de valores faltantes (`NA`). También organiza y provee una serie de herramientas para realizar modificaciones, análisis, y visualizaciones de los datos, y para manejar valores faltantes.
 
-### Funciones Principales de `DataExtractor`
+#### Funciones Principales de `DataExtractor`
 
 1. **Extracción de Información**: `DataExtractor` extrae y almacena los nombres de las columnas, tipos de datos, y la cantidad de valores faltantes para cada columna en un diccionario llamado `columns`. Esto ayuda al agente a seleccionar las herramientas adecuadas basadas en el tipo de dato o en si existen valores faltantes.
 
