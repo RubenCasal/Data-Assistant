@@ -1,4 +1,12 @@
-# Chatbot de Análisis de Datos con Llama 3.1 y LangGraph
+# Chatbot de Análisis y Modificación de Datos
+## DEMO
+<p align="center">
+  <img src="./readme_images/demo_gif.gif" alt="Demo Video" width="500" />
+</p>
+
+<p align="center">
+  <a href="https://youtu.be/h-mtwPsuVxk" target="_blank">Watch the full video on YouTube</a>
+</p>
 
 Este proyecto es un chatbot de análisis de datos que permite a los usuarios interactuar con archivos `.csv` mediante lenguaje natural, eliminando la necesidad de conocimientos técnicos sobre manipulación de datos. El sistema, basado en el modelo Llama 3.1 y una arquitectura de LangGraph, ofrece una interfaz intuitiva y herramientas personalizadas (`tools`) para realizar operaciones complejas de datos de manera sencilla.
 
